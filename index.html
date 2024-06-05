@@ -1,0 +1,41 @@
+<!-- Client (index.html) -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.io Chat</title>
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body>
+    <div>
+        <ul id="messages"></ul>
+        <input id="m" /> 
+        <button id="sendButton">Envoyer</button> <!-- Ajout de l'ID pour référencer en JavaScript -->
+    </div>
+
+    <script>
+        var socket = io();
+
+        // Utiliser la délégation d'événements plutôt que les attributs onclick
+        document.getElementById('sendButton').addEventListener('click', function() {
+            send();
+        });
+
+        function send() {
+            var text = document.getElementById('m').value; 
+            socket.emit('chat message', text);
+        }
+
+        socket.on('chat message', function(msg) {
+            var item = document.createElement('li');
+            item.textContent = msg;
+            document.getElementById('messages').appendChild(item);
+        });
+    </script>
+
+    <style>
+        /* Votre CSS ici */
+        /* Référencez les éléments par leur ID ou classe pour les styliser correctement */
+        /* Ajoutez vos styles ici */
+    </style>
+</body>
+</html>
